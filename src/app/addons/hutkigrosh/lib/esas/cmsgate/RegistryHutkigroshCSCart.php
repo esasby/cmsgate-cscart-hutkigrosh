@@ -52,6 +52,8 @@ class RegistryHutkigroshCSCart extends RegistryHutkigrosh
             [
                 ConfigFieldsHutkigrosh::shopName(),
                 ConfigFieldsHutkigrosh::useOrderNumber(),
+                ConfigFieldsHutkigrosh::paymentMethodName(),
+                ConfigFieldsHutkigrosh::paymentMethodDetails(),
                 ConfigFieldsHutkigrosh::paymentMethodNameWebpay(),
                 ConfigFieldsHutkigrosh::paymentMethodDetailsWebpay()
             ]);

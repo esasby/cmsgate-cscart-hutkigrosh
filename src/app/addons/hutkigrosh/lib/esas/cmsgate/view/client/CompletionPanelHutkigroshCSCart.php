@@ -29,76 +29,20 @@ class CompletionPanelHutkigroshCSCart extends CompletionPanelHutkigrosh
         return "ty-btn ty-btn__secondary";
     }
 
-//    public function getCssClass4TabsGroup()
-//    {
-//        return "panel-group";
-//    }
-//
-//    public function getCssClass4Tab()
-//    {
-//        return "panel panel-default checkout-step";
-//    }
-//
-//    public function getCssClass4TabHeader()
-//    {
-//        return "panel-heading";
-//    }
+    public function elementTabHeaderInput($key, $selectable)
+    {
+        return
+            ($selectable ? element::input(
+                attribute::id("input-" . $key),
+                attribute::type("radio"),
+                attribute::name("tabs2"),
+                attribute::style("display: none"),
+                attribute::checked($this->isTabChecked($key))
+            ) : "");
+    }
 
     public function getCssClass4TabHeaderLabel()
     {
         return "ty-step__title-active ty-step__title-txt";
     }
-
-//    public function getCssClass4TabBody()
-//    {
-//        return "panel-collapse";
-//    }
-//
-//    public function getCssClass4TabBodyContent()
-//    {
-//        return "panel-body";
-//    }
-//
-//
-//    public function getCssClass4AlfaclickForm()
-//    {
-//        return "form-inline";
-//    }
-//
-//    public function getCssClass4FormInput()
-//    {
-//        return "form-control";
-//    }
-//
-//    public function getModuleCSSFilePath()
-//    {
-//        return dirname(__FILE__) . "/hiddenRadio.css";
-//    }
-//
-//    public function elementTab($key, $header, $body, $selectable = true)
-//    {
-//        return
-//            element::section(
-//                attribute::id("tab-" . $key),
-//                attribute::clazz("tab " . $this->getCssClass4Tab()),
-//                $this->elementTabHeaderInput($key, $selectable),
-//                $this->elementTabHeader($key, $header),
-//                $this->elementTabBody($key, $body)
-//            )->__toString();
-//    }
-//
-//    public function elementTabHeader($key, $header)
-//    {
-//        return element::div(
-//            attribute::clazz("tab-header " . $this->getCssClass4TabHeader()),
-//            attribute::style("display:inline-block"),
-//            element::label(
-//                attribute::forr("input-" . $key),
-//                attribute::clazz($this->getCssClass4TabHeaderLabel()),
-//                attribute::style("text-align:left; font-weight:bold"),
-//                element::content($header)
-//            )
-//        );
-//    }
-
 }
