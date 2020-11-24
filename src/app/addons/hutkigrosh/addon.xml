@@ -9,22 +9,6 @@
     <priority>100</priority>
     <status>active</status>
     <dependencies></dependencies>
-    <queries>
-        <item for="install">
-            INSERT INTO `?:payment_processors` (`processor_id`, `processor`, `processor_script`, `processor_template`,
-            `admin_template`, `callback`, `type`, `addon`) VALUES
-            ('', 'Hutkigrosh', 'hutkigrosh.php', 'views/orders/components/payments/cc_outside.tpl', 'hutkigrosh.tpl',
-            'N', 'P', 'hutkigrosh')
-        </item>
-        <item for="uninstall">DELETE FROM ?:payment_descriptions
-            WHERE payment_id IN (SELECT payment_id FROM ?:payments
-            WHERE processor_id IN (SELECT processor_id FROM ?:payment_processors WHERE processor = 'hutkigrosh'))
-        </item>
-        <item for="uninstall">DELETE FROM ?:payments
-            WHERE processor_id IN (SELECT processor_id FROM ?:payment_processors WHERE processor = 'hutkigrosh')
-        </item>
-        <item for="uninstall">DELETE FROM ?:payment_processors WHERE processor = 'hutkigrosh'</item>
-    </queries>
     <compatibility>
         <core_version>
             <min>4.2.0</min>
@@ -45,7 +29,8 @@
             </json>
         </php_extensions>
     </compatibility>
-    <!--<functions>-->
-    <!--<item for="install">fn_hutkigrosh_install_db</item>-->
-    <!--</functions>-->
+    <functions>
+        <item for="install">fn_hutkigrosh_install</item>
+        <item for="uninstall">fn_hutkigrosh_uninstall</item>
+    </functions>
 </addon>

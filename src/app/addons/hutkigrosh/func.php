@@ -5,29 +5,40 @@
  * Date: 01.03.2018
  * Time: 12:55
  */
+require_once(dirname(__FILE__) . '/init.php');
+
+use esas\cmsgate\cscart\CSCartInstallHelper;
+use esas\cmsgate\cscart\CSCartPaymentMethod;
+use esas\cmsgate\cscart\CSCartPaymentProcessor;
+use esas\cmsgate\hutkigrosh\ConfigFieldsHutkigrosh;
+use esas\cmsgate\Registry;
 
 if (!defined('BOOTSTRAP')) {
     die('Access denied');
 }
-
-function fn_hutkigrosh_install_db()
+function fn_hutkigrosh_install()
 {
-    /**
-     * TODO добавленный таким способом платеж не виден клиенту из-за ult_objects_sharing
-     * https://www.cs-cart.ru/docs/4.4.x/developer_guide/core/sharing_schema.html
-     * Надо разобраться как это работает
-     **/
+    CSCartInstallHelper::uninstallDb();
+    $mainProcessor = new CSCartPaymentProcessor(); //using defaults
+    $mainProcessor->setTemplate('views/orders/components/payments/cc_outside.tpl');
+    $mainPaymentMethod = new CSCartPaymentMethod();
+    $mainPaymentMethod->setLogo('esasby_hutkigrosh.png');
+    $mainPaymentMethod->setProcessor($mainProcessor);
+    CSCartInstallHelper::addPaymentMethod($mainPaymentMethod);
 
 
-//    require_once(dirname(__FILE__) . '/init.php');
-//    $where = array(
-//        'processor' => 'Hutkigrosh');
-//    $payment_processor = db_get_row("SELECT * FROM ?:payment_processors WHERE ?w", $where);
-//    $payment_data = array(
-//        'payment' => Registry::getRegistry()->getTranslator()->getConfigFieldDefault(ConfigurationFields::paymentMethodName()),
-//        'processor_id' => $payment_processor['processor_id'],
-//        'status' => 'A',
-//        'instructions' => Registry::getRegistry()->getTranslator()->getConfigFieldDefault(ConfigurationFields::paymentMethodDetails()),
-//    );
-//    fn_update_payment($payment_data, 0);
+    $webpayProcessor = new CSCartPaymentProcessor(); //using defaults
+    $webpayProcessor->setProcessorName('Hutkigrosh Card');
+    $webpayProcessor->setTemplate('views/orders/components/payments/cc_outside.tpl');
+    $webpayProcessor->setAdminTemplate('');
+    $webpayPaymentMethod = new CSCartPaymentMethod();
+    $webpayPaymentMethod->setLogo('esasby_webpay.png');
+    $webpayPaymentMethod->setProcessor($webpayProcessor);
+    $webpayPaymentMethod->setName(Registry::getRegistry()->getTranslator()->getConfigFieldDefault(ConfigFieldsHutkigrosh::paymentMethodNameWebpay()));
+    $webpayPaymentMethod->setDescription(Registry::getRegistry()->getTranslator()->getConfigFieldDefault(ConfigFieldsHutkigrosh::paymentMethodDetailsWebpay()));
+    CSCartInstallHelper::addPaymentMethod($webpayPaymentMethod);
+}
+
+function fn_hutkigrosh_uninstall(){
+    CSCartInstallHelper::uninstallDb();
 }

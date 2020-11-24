@@ -8,18 +8,25 @@
 
 
 use esas\cmsgate\hutkigrosh\controllers\ControllerHutkigroshCompletionPage;
+use esas\cmsgate\hutkigrosh\controllers\ControllerHutkigroshCompletionPageWebpay;
 
 if ($mode == 'complete') {
     if (!empty($_REQUEST['order_id'])) {
-        $order_info = fn_get_order_info($_REQUEST['order_id']);
-        if (strtolower($order_info["payment_method"]["processor"]) == "hutkigrosh") {
-            try {
+        try {
+            $order_info = fn_get_order_info($_REQUEST['order_id']);
+            $processor = strtolower($order_info["payment_method"]["processor"]);
+            if ($processor == "hutkigrosh"
+                || ($processor == "hutkigrosh card" && array_key_exists("webpay_status", $_REQUEST)) ) { //или случай нажатия кнопки назад на форме webpay
                 $controller = new ControllerHutkigroshCompletionPage();
                 $completionPanel = $controller->process($_REQUEST['order_id']);
                 Tygh::$app['view']->assign('completionPanel', $completionPanel);
-            } catch (Throwable $e) {
-                Logger::getLogger("complete")->error("Exception:", $e);
+            } elseif ($processor == "hutkigrosh card") {
+                $controller = new ControllerHutkigroshCompletionPageWebpay();
+                $completionPanel = $controller->process($_REQUEST['order_id']);
+                Tygh::$app['view']->assign('completionPanelWebpay', $completionPanel);
             }
+        } catch (Throwable $e) {
+            Logger::getLogger("complete")->error("Exception:", $e);
         }
     }
 
