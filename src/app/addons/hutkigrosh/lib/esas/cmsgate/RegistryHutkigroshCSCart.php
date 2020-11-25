@@ -8,7 +8,6 @@
 
 namespace esas\cmsgate;
 
-use Context;
 use esas\cmsgate\descriptors\ModuleDescriptor;
 use esas\cmsgate\descriptors\VendorDescriptor;
 use esas\cmsgate\descriptors\VersionDescriptor;
@@ -18,7 +17,6 @@ use esas\cmsgate\hutkigrosh\RegistryHutkigrosh;
 use esas\cmsgate\view\admin\AdminViewFields;
 use esas\cmsgate\view\admin\ConfigFormCSCart;
 use esas\cmsgate\view\client\CompletionPanelHutkigroshCSCart;
-use Link;
 
 class RegistryHutkigroshCSCart extends RegistryHutkigrosh
 {

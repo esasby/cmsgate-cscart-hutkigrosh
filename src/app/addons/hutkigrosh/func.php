@@ -19,19 +19,23 @@ if (!defined('BOOTSTRAP')) {
 function fn_hutkigrosh_install()
 {
     CSCartInstallHelper::uninstallDb();
-    $mainProcessor = new CSCartPaymentProcessor(); //using defaults
+    $mainProcessor = new CSCartPaymentProcessor();
+    $mainProcessor->initDefaults();;
     $mainProcessor->setTemplate('views/orders/components/payments/cc_outside.tpl');
     $mainPaymentMethod = new CSCartPaymentMethod();
+    $mainPaymentMethod->initDefaults();;
     $mainPaymentMethod->setLogo('esasby_hutkigrosh.png');
     $mainPaymentMethod->setProcessor($mainProcessor);
     CSCartInstallHelper::addPaymentMethod($mainPaymentMethod);
 
 
-    $webpayProcessor = new CSCartPaymentProcessor(); //using defaults
+    $webpayProcessor = new CSCartPaymentProcessor();
+    $webpayProcessor->initDefaults();;
     $webpayProcessor->setProcessorName('Hutkigrosh Card');
     $webpayProcessor->setTemplate('views/orders/components/payments/cc_outside.tpl');
-    $webpayProcessor->setAdminTemplate('');
+    $webpayProcessor->setAdminTemplate('hutkigrosh_webpay.tpl');
     $webpayPaymentMethod = new CSCartPaymentMethod();
+    $webpayPaymentMethod->initDefaults();
     $webpayPaymentMethod->setLogo('esasby_webpay.png');
     $webpayPaymentMethod->setProcessor($webpayProcessor);
     $webpayPaymentMethod->setName(Registry::getRegistry()->getTranslator()->getConfigFieldDefault(ConfigFieldsHutkigrosh::paymentMethodNameWebpay()));

@@ -4,7 +4,7 @@
   "require": {
     "php": ">= 5.6.0",
     "esas/cmsgate-hutkigrosh-lib": "~v1.13.3",
-    "esas/cmsgate-cscart-lib": "~v1.1.0"
+    "esas/cmsgate-cscart-lib": "~v1.2.1"
   },
   "authors": [
     {
