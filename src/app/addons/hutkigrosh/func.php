@@ -12,6 +12,7 @@ use esas\cmsgate\cscart\CSCartPaymentMethod;
 use esas\cmsgate\cscart\CSCartPaymentProcessor;
 use esas\cmsgate\hutkigrosh\ConfigFieldsHutkigrosh;
 use esas\cmsgate\Registry;
+use esas\cmsgate\RegistryHutkigroshCSCart;
 
 if (!defined('BOOTSTRAP')) {
     die('Access denied');
@@ -21,22 +22,23 @@ function fn_hutkigrosh_install()
     CSCartInstallHelper::uninstallDb();
     $mainProcessor = new CSCartPaymentProcessor();
     $mainProcessor->initDefaults();;
+    $mainProcessor->setProcessorName(RegistryHutkigroshCSCart::PAYMENT_PROCESSOR_NAME_HUTKIGROSH);
     $mainProcessor->setTemplate('views/orders/components/payments/cc_outside.tpl');
     $mainPaymentMethod = new CSCartPaymentMethod();
     $mainPaymentMethod->initDefaults();;
-    $mainPaymentMethod->setLogo('esasby_hutkigrosh.png');
+    $mainPaymentMethod->setLogo('hutkigrosh.png');
     $mainPaymentMethod->setProcessor($mainProcessor);
     CSCartInstallHelper::addPaymentMethod($mainPaymentMethod);
 
 
     $webpayProcessor = new CSCartPaymentProcessor();
     $webpayProcessor->initDefaults();;
-    $webpayProcessor->setProcessorName('Hutkigrosh Card');
+    $webpayProcessor->setProcessorName(RegistryHutkigroshCSCart::PAYMENT_PROCESSOR_NAME_WEBPAY);
     $webpayProcessor->setTemplate('views/orders/components/payments/cc_outside.tpl');
     $webpayProcessor->setAdminTemplate('hutkigrosh_webpay.tpl');
     $webpayPaymentMethod = new CSCartPaymentMethod();
     $webpayPaymentMethod->initDefaults();
-    $webpayPaymentMethod->setLogo('esasby_webpay.png');
+    $webpayPaymentMethod->setLogo('hutkigrosh_webpay.png');
     $webpayPaymentMethod->setProcessor($webpayProcessor);
     $webpayPaymentMethod->setName(Registry::getRegistry()->getTranslator()->getConfigFieldDefault(ConfigFieldsHutkigrosh::paymentMethodNameWebpay()));
     $webpayPaymentMethod->setDescription(Registry::getRegistry()->getTranslator()->getConfigFieldDefault(ConfigFieldsHutkigrosh::paymentMethodDetailsWebpay()));

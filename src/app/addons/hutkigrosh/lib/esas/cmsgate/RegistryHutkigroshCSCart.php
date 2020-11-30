@@ -80,11 +80,14 @@ class RegistryHutkigroshCSCart extends RegistryHutkigrosh
     {
         return new ModuleDescriptor(
             "hutkigrosh",
-            new VersionDescriptor("1.13.0", "2020-11-11"),
+            new VersionDescriptor("1.13.1", "2020-11-30"),
             "Прием платежей через ЕРИП (сервис Hutkigrosh)",
             "https://bitbucket.esas.by/projects/CG/repos/cmsgate-cscart-hutkigrosh/browse",
             VendorDescriptor::esas(),
             "Выставление пользовательских счетов в ЕРИП"
         );
     }
+
+    const PAYMENT_PROCESSOR_NAME_HUTKIGROSH = "Hutkigrosh";
+    const PAYMENT_PROCESSOR_NAME_WEBPAY = "Hutkigrosh Card";
 }
